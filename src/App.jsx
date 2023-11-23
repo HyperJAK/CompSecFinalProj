@@ -1,4 +1,4 @@
-import {useState, useEffect, useRef} from 'react';
+import {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from "./HomePage/Home.jsx";
 import LogIn from "./LogIn.jsx";
@@ -35,11 +35,7 @@ export default function App() {
     }, [isLoggin,isRegistring] );
 
     function handleLoggin() {
-        if (name === "elie" && Password === "bc") {
-            setIsLoggin(!isLoggin);
-        } else {
-            setIsLoggin(!isLoggin);
-        }
+        setIsLoggin(!isLoggin);
     }
 
     const handleOnIdle = () => {

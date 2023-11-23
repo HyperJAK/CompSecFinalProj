@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {useState} from 'react';
 import axios from "axios";
 
+// eslint-disable-next-line react/prop-types
 export default function Home({tableData,setTableData,handleLoggin,setEmail,setPass,setCPass}) {
 
 
@@ -64,6 +65,7 @@ export default function Home({tableData,setTableData,handleLoggin,setEmail,setPa
                     allowed: formData.canDelete
                 });
 
+            // eslint-disable-next-line react/prop-types
                 setTableData(previousData => [...previousData, { id: tableData.length+1, ...formData }]);
 
         }
@@ -106,6 +108,7 @@ export default function Home({tableData,setTableData,handleLoggin,setEmail,setPa
                 </tr>
                 </thead>
                 <tbody>
+                {/* eslint-disable-next-line react/prop-types */}
                 {Array.isArray(tableData) && tableData.map((data) => (
                     <tr key={data.id}>
                         <td>

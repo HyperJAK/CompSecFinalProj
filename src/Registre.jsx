@@ -1,13 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Container, Row, Col, Card} from 'react-bootstrap';
 import axios from "axios";
-import {useEffect} from "react";
 
 
 export default function Registre(Email,Password,CPassword,setEmail,setPass,setCPass,handleLoggin,handleRegistring){
 
     const handleR = () => {
-        if (Email && Password && CPassword && Password===CPassword) {
+        if ((Email && Password && CPassword) && (Password===CPassword)) {
             axios.post('http://localhost:5174/api/insertUser', {
                 mail: Email,
                 pass: Password,
@@ -64,10 +63,10 @@ export default function Registre(Email,Password,CPassword,setEmail,setPass,setCP
                                                 <label className="form-label" htmlFor="form2Example27">
                                                     Password
                                                 </label>
-                                                <input value={CPassword} type="password" id="form2Example27"
+                                                <input value={CPassword} type="password" id="form2Example29"
                                                        className="form-control form-control-lg"
                                                        onChange={e=>{setCPass(e.target.value)}} />
-                                                <label className="form-label" htmlFor="form2Example27">
+                                                <label className="form-label" htmlFor="form2Example29">
                                                     Confirm Password
                                                 </label>
                                             </div>

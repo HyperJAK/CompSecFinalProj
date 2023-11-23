@@ -4,13 +4,22 @@ const bodyParser = require('body-parser')
 const cors=require('cors')
 const mysql = require ('mysql2')
 
-const db = mysql.createPool({
+/*const db = mysql.createPool({
     host: "localhost",
     user: "root",
     password:"Wadih3210",
     database:"projectdatabase"
 
+})*/
+
+const db = mysql.createPool({
+    host: "localhost",
+    user: "JAK",
+    password:"jak1",
+    database:"projectdatabase"
+
 })
+
 
 app.use(cors())
 app.use(express.json())
@@ -70,7 +79,10 @@ app.post("/api/insertUser", (req, res) => {
     const email = req.body.mail;
     const password = req.body.pass;
 
-    const sqlInsertUser = "INSERT INTO userstable (email, password) VALUES (?, ?)";
+    console.log(email)
+    console.log(password)
+
+    const sqlInsertUser = "INSERT INTO userstable (email, password) VALUES (?, ?);";
     db.query(sqlInsertUser, [email, password], (err, result) => {
     });
 });
