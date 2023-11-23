@@ -1,9 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Container, Row, Col, Card} from 'react-bootstrap';
 import axios from "axios";
+import {AuthRegister} from "./Validation/AuthRegister.jsx";
 
 
-export default function Registre(Email,Password,CPassword,setEmail,setPass,setCPass,handleLoggin,handleRegistring){
+export default function Registre(Email,Password,CPassword,setEmail,setPass,setCPass,handleLoggin,handleRegistring,setIsLoggin){
 
     const handleR = () => {
         if ((Email && Password && CPassword) && (Password===CPassword)) {
@@ -75,6 +76,9 @@ export default function Registre(Email,Password,CPassword,setEmail,setPass,setCP
                                                     Register
                                                 </Button>
                                             </div>
+
+                                            <AuthRegister setIsLoggin={setIsLoggin}/>
+
                                             <p className="mb-5 pb-lg-2" style={{color: '#393f81'}}>
                                                 Have an Account? <a onClick={handleRegistring} style={{color: '#393f81'}}>
                                                 Sign In

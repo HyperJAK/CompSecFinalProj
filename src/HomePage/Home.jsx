@@ -1,18 +1,26 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useState} from 'react';
 import axios from "axios";
+import {useAuth0} from "@auth0/auth0-react";
 
 // eslint-disable-next-line react/prop-types
-export default function Home({tableData,setTableData,handleLoggin,setEmail,setPass,setCPass}) {
+export default function Home({tableData,setTableData,handleLoggin,setEmail,setPass,setCPass,setIsLoggin}) {
 
 
     const [showInputFields, setShowInputFields] = useState(false);
+    const { logout} = useAuth0();
 
     const handlelogout = () => {
+        //To logout properly from Auth if used
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+
+        logout({logoutParams: {returnTo: window.location.origin}}).then(r => {setIsLoggin(false);})
+
         setCPass(''),
         setEmail(''),
         setPass(''),
         handleLoggin()
+        //Add here the auth logout
     };
 
     const handleAddButtonClick = () => {

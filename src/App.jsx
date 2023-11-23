@@ -69,12 +69,12 @@ export default function App() {
 
 
     if (isLoggin && !isRegistring) {
-        return (LogIn(Email, Password, setEmail, setPass, handleLoggin, handleRegistring, usersData));
+        return (LogIn(Email, Password, setEmail, setPass, handleLoggin, handleRegistring, usersData, setIsLoggin));
     } else if (isRegistring) {
-        return (Registre(Email, Password, CPassword, setEmail, setPass, setCPass, handleLoggin, handleRegistring))
+        return (Registre(Email, Password, CPassword, setEmail, setPass, setCPass, handleLoggin, handleRegistring, setIsLoggin))
     } else {
         return (<>
-                <Home tableData={tableData} setTableData={setTableData} handleLoggin={handleLoggin} setEmail={setEmail} setPass={setPass} setCPass={setCPass}/>
+                <Home tableData={tableData} setTableData={setTableData} handleLoggin={handleLoggin} setEmail={setEmail} setPass={setPass} setCPass={setCPass} setIsLoggin={setIsLoggin}/>
                 <Alert
                     showSessionExpiredModal={showSessionExpiredModal}
                     handleCloseSessionExpiredModal={handleCloseSessionExpiredModal}
