@@ -2,7 +2,7 @@ import {useState, useEffect, useRef} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from "./HomePage/Home.jsx";
 import LogIn from "./LogIn.jsx";
-import Registre from "./Registre.jsx";
+import {Registre} from "./Registre.jsx";
 import {useIdleTimer} from "react-idle-timer"
 import Alert from "./HomePage/AlertFunction.jsx";
 import axios from "axios";
@@ -18,9 +18,10 @@ export default function App() {
     const [showSessionExpiredModal, setShowSessionExpiredModal] = useState(false);
     const [tableData, setTableData] = useState([]);
     const [usersData, setUsersData] = useState([]);
-
-
-
+    const [role, setRole] = useState("employee"); // or 'employee' based on your authentication logic
+    const [isSaving, setisSaving] = useState(false);
+    console.log('UserRole in App:', role);
+    console.log('UserEamil in App:', Email);
     useEffect(() => {
         // Fetch table data
         axios.get('http://localhost:5174/api/get').then((response) => {
@@ -30,12 +31,33 @@ export default function App() {
         axios.get('http://localhost:5174/api/getUsers').then((response) => {
             setUsersData(response.data);
         });
+        
+
+        setisSaving(false)
+    }, [isLoggin,isRegistring,isSaving] );
 
 
-    }, [isLoggin,isRegistring] );
+    useEffect(() => {
+        // Fetch user role
+        axios.get('http://localhost:5174/api/getRole', {
+          params: {
+            userEmail: Email, // Replace with the actual user's email
+          },
+        })
+          .then(response => {
+            const fetchedRole = response.data.role;
+            setRole(fetchedRole);
+          })
+          .catch(error => {
+            console.error('Error fetching user role:', error);
+          });
+      }, [!isLoggin]);
+
+
+
 
     function handleLoggin() {
-        if (name === "elie" && Password === "bc") {
+        if (Email === "elie" && Password === "bc") {
             setIsLoggin(!isLoggin);
         } else {
             setIsLoggin(!isLoggin);
@@ -75,10 +97,10 @@ export default function App() {
     if (isLoggin && !isRegistring) {
         return (LogIn(Email, Password, setEmail, setPass, handleLoggin, handleRegistring, usersData));
     } else if (isRegistring) {
-        return (Registre(Email, Password, CPassword, setEmail, setPass, setCPass, handleLoggin, handleRegistring))
+        return (<Registre props={{Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleRegistring}}/>)
     } else {
         return (<>
-                <Home tableData={tableData} setTableData={setTableData} handleLoggin={handleLoggin} setEmail={setEmail} setPass={setPass} setCPass={setCPass}/>
+                <Home tableData={tableData} setTableData={setTableData} handleLoggin={handleLoggin} Email={Email }setEmail={setEmail} setPass={setPass} setCPass={setCPass} role={role} setisSaving={setisSaving} handleRegistring={handleRegistring}/>
                 <Alert
                     showSessionExpiredModal={showSessionExpiredModal}
                     handleCloseSessionExpiredModal={handleCloseSessionExpiredModal}
@@ -86,6 +108,7 @@ export default function App() {
             </>
         );
     }
+    
 }
 
 

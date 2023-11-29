@@ -4,17 +4,21 @@ import axios from "axios";
 import {useEffect} from "react";
 
 
-export default function Registre(Email,Password,CPassword,setEmail,setPass,setCPass,handleLoggin,handleRegistring){
+export  const Registre=({props})=>{
 
+   const {Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleRegistring}=props
+    
     const handleR = () => {
         if (Email && Password && CPassword && Password===CPassword) {
             axios.post('http://localhost:5174/api/insertUser', {
                 mail: Email,
                 pass: Password,
+                role: role,
             })
                 setPass('')
                 setCPass('')
                 setEmail('')
+                setRole('employee')
                 alert("success !")
 
         } else {
@@ -70,7 +74,25 @@ export default function Registre(Email,Password,CPassword,setEmail,setPass,setCP
                                                 <label className="form-label" htmlFor="form2Example27">
                                                     Confirm Password
                                                 </label>
-                                            </div>
+                                            </div> 
+                                            <div className="form-outline mb-4">
+          <label className="form-label" htmlFor="form2Example27">
+            Role
+          </label>
+          <select
+            className="form-select form-select-lg"
+            id="form2Example27"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+          >
+            <option value="employee">Employee</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+                                                
+                                                 
+
+                                                  
                                             <div className="pt-1 mb-4">
                                                 <Button variant="dark" size="lg" onClick={handleR}>
                                                     Register

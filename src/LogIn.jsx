@@ -67,11 +67,6 @@ export default function LogIn(Email,Password,setEmail,setPass,handleLoggin,handl
                                                 Login
                                             </Button>
                                         </div>
-                                        <p className="mb-5 pb-lg-2" style={{color: '#393f81'}}>
-                                            Don't have an account? <a onClick={handleRegistring} style={{color: '#393f81'}}>
-                                            Register here
-                                        </a>
-                                        </p>
                                         <a href="#!" className="small text-muted">
                                             Terms of use.
                                         </a>
