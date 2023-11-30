@@ -3,10 +3,14 @@ import {useState} from 'react';
 import axios from "axios";
 import {useAuth0} from "@auth0/auth0-react";
 
-// eslint-disable-next-line react/prop-types
-export default function Home({tableData,setTableData,handleLoggin,setEmail,setPass,setCPass,setIsLoggin}) {
+export default function Home({tableData,setTableData,handleLoggin,Email,setEmail,setPass,setCPass,role,setisSaving,handleRegistring}) {
 
 
+    console.log('UserRole in Home:', role);
+    console.log('UserEamil in Home:', Email);
+    
+
+    
     const [showInputFields, setShowInputFields] = useState(false);
     const { logout} = useAuth0();
 
@@ -72,9 +76,7 @@ export default function Home({tableData,setTableData,handleLoggin,setEmail,setPa
                     picture: formData.picture,
                     allowed: formData.canDelete
                 });
-
-            // eslint-disable-next-line react/prop-types
-                setTableData(previousData => [...previousData, { id: tableData.length+1, ...formData }]);
+                setisSaving(true)
 
         }
          else {
@@ -83,23 +85,23 @@ export default function Home({tableData,setTableData,handleLoggin,setEmail,setPa
     };
 
 
-
-
-
-
-
-
     const handleDeleteButtonClick = (id) => {
-        // Make DELETE request to the server
-        axios.delete(`http://localhost:5174/api/delete/${id}`)
+        // Check if the user has the necessary role before making the delete request
+        if (role === 'admin') {
+          // Make DELETE request to the server
+          axios.delete(`http://localhost:5174/api/delete/${id}`)
             .then(() => {
-                // If deletion on the server is successful, update the state
-                setTableData((prevTableData) => prevTableData.filter((data) => data.id !== id));
+              // If deletion on the server is successful, update the state
+              setTableData((prevTableData) => prevTableData.filter((data) => data.id !== id));
             })
             .catch((error) => {
-                console.error('Error deleting record:', error);
+              console.error('Error deleting record:', error);
             });
-    };
+        } else {
+          // User does not have the necessary privileges
+          alert('You do not have permission to delete employees.');
+        }
+      };
 
 
 
@@ -235,6 +237,16 @@ export default function Home({tableData,setTableData,handleLoggin,setEmail,setPa
             >
                 Log Out
             </button>
+
+            <button
+                type="button"
+                className="btn btn-primary mt-3"
+                onClick={handleRegistring}
+                style={{display: role==="admin"? "block":"none"}}
+            >
+                Add User
+            </button>
+
         </>
     );
 }
