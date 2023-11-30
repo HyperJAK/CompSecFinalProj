@@ -4,9 +4,9 @@ import axios from "axios";
 import {AuthRegister} from "./Validation/AuthRegister.jsx";
 
 
-export  const Registre=({props})=>{
+export const Registre=({props})=>{
 
-   const {Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleRegistring}=props
+   const {Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleRegistring,setIsLoggin}=props
     
     const handleR = () => {
         if ((Email && Password && CPassword) && (Password===CPassword)) {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Button } from "react-bootstrap";
 import {EncryptPassword} from "../Utilities.jsx";
+import axios from "axios";
 
 export const AuthRegister = ({setIsLoggin}) =>{
     const [isHovered, setIsHovered] = useState(false);
@@ -32,6 +33,21 @@ export const AuthRegister = ({setIsLoggin}) =>{
 
                     const encrypted = await EncryptPassword(user.sub, encryptionKey);
                     console.log(encrypted);
+
+
+                    try{
+
+                        axios.post('http://localhost:5174/api/insertUser', {
+                            mail: user.email,
+                            pass: encrypted,
+                            role: 'employee',
+                        })
+
+                    }catch(response){
+                        alert((await response).data.error);
+                    }
+
+
 
                     // Continue with your logic
                     setIsLoggin(false);

@@ -94,7 +94,7 @@ setIsLoggin(!isLoggin);
     if (isLoggin && !isRegistring) {
         return (LogIn(Email, Password, setEmail, setPass, handleLoggin, handleRegistring, usersData, setIsLoggin));
     } else if (isRegistring) {
-return (<Registre props={{Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleRegistring}}/>)
+return (<Registre props={{Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleRegistring,setIsLoggin}}/>)
     } else {
         return (<>
 <Home tableData={tableData} setTableData={setTableData} handleLoggin={handleLoggin} Email={Email }setEmail={setEmail} setPass={setPass} setCPass={setCPass} role={role} setisSaving={setisSaving} handleRegistring={handleRegistring}/>
