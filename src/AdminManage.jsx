@@ -6,20 +6,22 @@ import {AuthRegister} from "./Validation/AuthRegister.jsx";
 
 export const AdminManage=({props})=>{
 
-    const {Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleAdminManage,setIsLoggin}=props
+    const {Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleAdminManage,setIsLoggin,usersData}=props
 
     const handleR = () => {
-        if ((Email && Password && CPassword) && (Password===CPassword)) {
-            axios.post('http://localhost:5174/api/insertUser', {
+
+        const user = usersData.find((item) => item.email === Email);
+
+        if (user) {
+            const response = axios.post('http://localhost:5174/api/updateUser', {
                 mail: Email,
-                pass: Password,
                 role: role,
             })
-            setPass('')
-            setCPass('')
+
+            if(response){
+                alert('Successfully updated user')
+            }
             setEmail('')
-            setRole('employee')
-            alert("success !")
 
         } else {
             alert('Please fill in all the required fields and make sure that your password is right');
@@ -28,7 +30,7 @@ export const AdminManage=({props})=>{
 
 
     return(
-        <section style={{ backgroundColor: '#d0bec3', backgroundSize: 'cover', height: '100vh', overflow: 'auto' }}>
+        <section style={{ backgroundColor: '#a8d2f0', backgroundSize: 'cover', height: '100vh', overflow: 'auto' }}>
             <Container className="py-5 h-100">
                 <Row className="d-flex justify-content-center align-items-center h-100">
                     <Col xl={10}>
@@ -36,7 +38,7 @@ export const AdminManage=({props})=>{
                             <Row className="g-0">
                                 <Col md={6} lg={5} className="d-none d-md-block">
                                     <Card.Img
-                                        src='src/assets/2.jpg'
+                                        src='src/assets/6.jpeg'
                                         alt="login form"
                                         className="img-fluid"
                                         style={{borderRadius: '1rem 0 0 1rem', height: '700'}}
@@ -60,20 +62,7 @@ export const AdminManage=({props})=>{
                                                     Email address
                                                 </label>
                                             </div>
-                                            <div className="form-outline mb-4">
-                                                <input value={Password} type="password" id="form2Example27"
-                                                       className="form-control form-control-lg"
-                                                       onChange={e=>{setPass(e.target.value)}} />
-                                                <label className="form-label" htmlFor="form2Example27">
-                                                    New Password
-                                                </label>
-                                                <input value={CPassword} type="password" id="form2Example29"
-                                                       className="form-control form-control-lg"
-                                                       onChange={e=>{setCPass(e.target.value)}} />
-                                                <label className="form-label" htmlFor="form2Example29">
-                                                    Confirm New Password
-                                                </label>
-                                            </div>
+
                                             <div className="form-outline mb-4">
                                                 <label className="form-label" htmlFor="form2Example27">
                                                     Role
@@ -90,8 +79,6 @@ export const AdminManage=({props})=>{
                                             </div>
 
 
-
-
                                             <div className="pt-1 mb-4">
                                                 <Button variant="dark" size="lg" onClick={handleR}>
                                                     Update User
@@ -104,14 +91,7 @@ export const AdminManage=({props})=>{
                                                 </Button>
                                             </div>
 
-                                            <AuthRegister setIsLoggin={setIsLoggin}/>
 
-                                            <a href="#!" className="small text-muted">
-                                                Terms of use.
-                                            </a>
-                                            <a href="#!" className="small text-muted">
-                                                Privacy policy
-                                            </a>
                                         </form>
                                     </Card.Body>
                                 </Col>

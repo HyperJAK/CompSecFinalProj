@@ -68,7 +68,7 @@ export const AdminAdd=({props}) =>{
 
 
     return(
-        <section style={{ backgroundColor: '#d0bec3', backgroundSize: 'cover', height: '100vh', overflow: 'auto' }}>
+        <section style={{ backgroundColor: '#a8d2f0', backgroundSize: 'cover', height: '100vh', overflow: 'auto' }}>
             <Container className="py-5 h-100">
                 <Row className="d-flex justify-content-center align-items-center h-100">
                     <Col xl={10}>
@@ -76,7 +76,7 @@ export const AdminAdd=({props}) =>{
                             <Row className="g-0">
                                 <Col md={6} lg={5} className="d-none d-md-block">
                                     <Card.Img
-                                        src='src/assets/2.jpg'
+                                        src='src/assets/6.jpeg'
                                         alt="login form"
                                         className="img-fluid"
                                         style={{borderRadius: '1rem 0 0 1rem', height: '700'}}
@@ -146,12 +146,6 @@ export const AdminAdd=({props}) =>{
 
                                             <AuthRegister setIsLoggin={setIsLoggin}/>
 
-                                            <a href="#!" className="small text-muted">
-                                                Terms of use.
-                                            </a>
-                                            <a href="#!" className="small text-muted">
-                                                Privacy policy
-                                            </a>
                                         </form>
                                     </Card.Body>
                                 </Col>

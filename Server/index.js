@@ -105,4 +105,15 @@ const sqlInsertUser = "INSERT INTO userstable (email, password, role) VALUES (?,
     });
 });
 
+
+
+app.post("/api/updateUser", (req, res) => {
+    const email = req.body.mail;
+    const role=req.body.role;
+
+    const sqlUpdateUser = "update userstable set role = ? where email = ?";
+    db.query(sqlUpdateUser, [role, email], (err, result) => {
+    });
+});
+
 app.listen(5174, () =>{console.log("running on port 5174"); })
