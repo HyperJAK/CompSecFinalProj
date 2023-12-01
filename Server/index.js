@@ -66,7 +66,7 @@ app.post("/api/insert", (req,res)=>{
 
     app.delete("/api/delete/:id", (req, res) => {
         const idToDelete = req.params.id;
-        const sqlDelete = "DELETE FROM mytable WHERE id = (?)";
+        const sqlDelete = "DELETE FROM mytable WHERE id = ?";
 
         db.query(sqlDelete, idToDelete, (err, result) => {
             if (err) {
@@ -102,6 +102,17 @@ app.post("/api/insertUser", (req, res) => {
 
 const sqlInsertUser = "INSERT INTO userstable (email, password, role) VALUES (?, ?, ?)";
     db.query(sqlInsertUser, [email, password,role], (err, result) => {
+    });
+});
+
+
+
+app.post("/api/updateUser", (req, res) => {
+    const email = req.body.mail;
+    const role=req.body.role;
+
+    const sqlUpdateUser = "update userstable set role = ? where email = ?";
+    db.query(sqlUpdateUser, [role, email], (err, result) => {
     });
 });
 

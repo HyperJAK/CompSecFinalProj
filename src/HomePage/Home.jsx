@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {useState} from 'react';
 import axios from "axios";
 import {useAuth0} from "@auth0/auth0-react";
+import {FileUpload} from "../UploadFile.jsx";
 
 export default function Home({tableData,setTableData,handleLoggin,Email,setEmail,setPass,setCPass,role,setisSaving,handleAdminAdd,handleAdminManage}) {
 
@@ -103,6 +104,12 @@ export default function Home({tableData,setTableData,handleLoggin,Email,setEmail
         }
       };
 
+    const buttons_style = {
+
+        backgroundColor: 'black',
+        color: 'white'
+    }
+
 
 
     return (
@@ -162,6 +169,7 @@ export default function Home({tableData,setTableData,handleLoggin,Email,setEmail
             <button
                 type="button"
                 className="btn btn-primary mt-3"
+                style={buttons_style}
                 onClick={handleAddButtonClick}
             >
                 Add
@@ -234,6 +242,7 @@ export default function Home({tableData,setTableData,handleLoggin,Email,setEmail
                 type="button"
                 className="btn btn-primary mt-3"
                 onClick={handlelogout}
+                style={buttons_style}
             >
                 Log Out
             </button>
@@ -242,7 +251,7 @@ export default function Home({tableData,setTableData,handleLoggin,Email,setEmail
                 type="button"
                 className="btn btn-primary mt-3"
                 onClick={handleAdminAdd}
-                style={{display: role==="admin"? "block":"none"}}
+                style={{display: role==="admin"? "block":"none", backgroundColor: 'black'}}
             >
                 Add Users
             </button>
@@ -251,10 +260,14 @@ export default function Home({tableData,setTableData,handleLoggin,Email,setEmail
                 type="button"
                 className="btn btn-primary mt-3"
                 onClick={handleAdminManage}
-                style={{display: role==="admin"? "block":"none"}}
+                style={{display: role==="admin"? "block":"none", backgroundColor: 'black'}}
             >
                 Manage Users
             </button>
+
+            <br></br>
+
+            <FileUpload />
 
         </>
     );

@@ -74,7 +74,7 @@ export default function App() {
     };
 
     const {reset} = useIdleTimer({
-        timeout: 60000,
+        timeout: 120000,
         onIdle: handleOnIdle,
     });
 
@@ -106,7 +106,7 @@ export default function App() {
     } else if (isAdminAdding) {
 return (<AdminAdd props={{Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleAdminAdd,setIsLoggin}}/>)}
     else if (isAdminManaging) {
-            return (<AdminManage props={{Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleAdminManage,setIsLoggin}}/>)
+            return (<AdminManage props={{Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleAdminManage,setIsLoggin,usersData}}/>)
     } else {
         return (<>
 <Home tableData={tableData} setTableData={setTableData} handleLoggin={handleLoggin} Email={Email }setEmail={setEmail} setPass={setPass} setCPass={setCPass} role={role} setisSaving={setisSaving} handleAdminAdd={handleAdminAdd} handleAdminManage={handleAdminManage}/>
