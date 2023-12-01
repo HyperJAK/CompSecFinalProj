@@ -1,16 +1,25 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Container, Row, Col, Card} from 'react-bootstrap';
+import {AuthRegister} from "./Validation/AuthRegister.jsx";
+import {DecryptPassword} from "./Utilities.jsx";
 
 
 
-export default function LogIn(Email,Password,setEmail,setPass,handleLoggin,handleRegistring,usersData){
+export default function LogIn(Email,Password,setEmail,setPass,handleLoggin,handleAdminAdd,usersData,setIsLoggin){
 
 
-    function loginhandle() {
-        const user = usersData.find((item) => item.email === Email && item.password === Password);
+    async function loginhandle() {
+        const user = usersData.find((item) => item.email === Email);
 
-        if(user){
-           handleLoggin()
+        if (user) {
+            const decryptedPass = await DecryptPassword(Password);
+            if(decryptedPass === user.password){
+                handleLoggin()
+            }
+            else{
+                alert("Invalid email or password");
+            }
+
         } else {
             alert("Invalid email or password"); // You can replace this with your desired failure action
         }
@@ -67,11 +76,8 @@ export default function LogIn(Email,Password,setEmail,setPass,handleLoggin,handl
                                                 Login
                                             </Button>
                                         </div>
-                                        <p className="mb-5 pb-lg-2" style={{color: '#393f81'}}>
-                                            Don't have an account? <a onClick={handleRegistring} style={{color: '#393f81'}}>
-                                            Register here
-                                        </a>
-                                        </p>
+                                        <AuthRegister setIsLoggin={setIsLoggin}/>
+
                                         <a href="#!" className="small text-muted">
                                             Terms of use.
                                         </a>

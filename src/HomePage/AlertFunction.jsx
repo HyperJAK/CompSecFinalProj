@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Modal} from "react-bootstrap";
 
+// eslint-disable-next-line react/prop-types
 export default function Alert({showSessionExpiredModal, handleCloseSessionExpiredModal}){
     return (<>
         <Modal show={showSessionExpiredModal} centered>

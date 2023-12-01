@@ -4,13 +4,22 @@ const bodyParser = require('body-parser')
 const cors=require('cors')
 const mysql = require ('mysql2')
 
-const db = mysql.createPool({
+/*const db = mysql.createPool({
     host: "localhost",
     user: "root",
     password:"Wadih3210",
     database:"projectdatabase"
 
+})*/
+
+const db = mysql.createPool({
+    host: "localhost",
+    user: "JAK",
+    password:"jak1",
+    database:"projectdatabase"
+
 })
+
 
 app.use(cors())
 app.use(express.json())
@@ -29,8 +38,28 @@ app.get("/api/getUsers", (req, res) => {
     db.query(sqlSelectUsers, (err, result) => {
         res.send(result);
     });
+
 });
 
+app.get("/api/getRole", (req, res) => {
+    const { userEmail } = req.query; // Assuming you pass the user's email as a query parameter
+    const sqlSelectRole = "SELECT role FROM userstable WHERE email = ?";
+    
+    db.query(sqlSelectRole, [userEmail], (err, result) => {
+      if (err) {
+        console.error('Error fetching user role:', err);
+        res.status(500).send('Internal Server Error');
+      } else {
+        if (result.length > 0) {
+          const role = result[0].role;
+          res.send({ role: role });
+          console.log(result);
+        } else {
+          res.status(404).send('User not found');
+        }
+      }
+    });
+  });
 
 app.post("/api/insert", (req,res)=>{
 
@@ -69,9 +98,10 @@ app.post("/api/insert", (req,res)=>{
 app.post("/api/insertUser", (req, res) => {
     const email = req.body.mail;
     const password = req.body.pass;
+    const role=req.body.role;
 
-    const sqlInsertUser = "INSERT INTO userstable (email, password) VALUES (?, ?)";
-    db.query(sqlInsertUser, [email, password], (err, result) => {
+const sqlInsertUser = "INSERT INTO userstable (email, password, role) VALUES (?, ?, ?)";
+    db.query(sqlInsertUser, [email, password,role], (err, result) => {
     });
 });
 
