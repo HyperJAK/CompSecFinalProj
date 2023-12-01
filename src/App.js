@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from "./HomePage/Home.js";
-import LogIn from "./LogIn.js";
+import {LogIn} from "./LogIn.js";
 import {AdminAdd} from "./AdminAdd.js";
 import {useIdleTimer} from "react-idle-timer"
 import Alert from "./HomePage/AlertFunction.js";
@@ -102,7 +102,7 @@ export default function App() {
 
 
   if (isLoggin && !isAdminAdding) {
-    return (LogIn(Email, Password, setEmail, setPass, handleLoggin, handleAdminAdd, usersData, setIsLoggin));
+    return (<LogIn props={({Email, Password, setEmail, setPass, handleLoggin, handleAdminAdd, usersData, setIsLoggin})}/>);
   } else if (isAdminAdding) {
     return (<AdminAdd props={{Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleAdminAdd,setIsLoggin}}/>)}
   else if (isAdminManaging) {

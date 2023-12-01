@@ -3,6 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const cors=require('cors')
 const mysql = require ('mysql2')
+require('dotenv').config();
 
 
 const db = mysql.createPool({
@@ -12,6 +13,9 @@ const db = mysql.createPool({
     database: process.env.MYSQL_SERVER_DB_NAME
 
 })
+
+
+
 
 
 app.use(cors())
@@ -30,6 +34,7 @@ app.get("/api/getUsers", (req, res) => {
     const sqlSelectUsers = "SELECT email,password FROM userstable";
     db.query(sqlSelectUsers, (err, result) => {
         res.send(result);
+        console.log(result)
     });
 
 });

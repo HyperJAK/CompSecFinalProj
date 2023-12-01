@@ -7,11 +7,13 @@ import mainPic from './assets/6.jpeg';
 
 
 
-export default function LogIn(Email,Password,setEmail,setPass,handleLoggin,handleAdminAdd,usersData,setIsLoggin){
+export const LogIn = ({props}) => {
 
 
+    const {Email, Password, setEmail, setPass, handleLoggin, handleAdminAdd, usersData, setIsLoggin} = props;
     async function loginhandle() {
-        const user = usersData.find((item) => item.email === Email);
+        const user = Array.isArray(usersData) ? usersData.find((item) => item.email === Email) ?? null : null;
+
 
 
         if (user) {
