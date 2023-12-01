@@ -74,7 +74,7 @@ export default function App() {
     };
 
     const {reset} = useIdleTimer({
-        timeout: 60000,
+        timeout: 120000,
         onIdle: handleOnIdle,
     });
 

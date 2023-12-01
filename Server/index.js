@@ -66,7 +66,7 @@ app.post("/api/insert", (req,res)=>{
 
     app.delete("/api/delete/:id", (req, res) => {
         const idToDelete = req.params.id;
-        const sqlDelete = "DELETE FROM mytable WHERE id = (?)";
+        const sqlDelete = "DELETE FROM mytable WHERE id = ?";
 
         db.query(sqlDelete, idToDelete, (err, result) => {
             if (err) {
