@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {useState} from 'react';
 import axios from "axios";
 import {useAuth0} from "@auth0/auth0-react";
+import {FileUpload} from "../UploadFile.jsx";
 
 export default function Home({tableData,setTableData,handleLoggin,Email,setEmail,setPass,setCPass,role,setisSaving,handleAdminAdd,handleAdminManage}) {
 
@@ -255,6 +256,10 @@ export default function Home({tableData,setTableData,handleLoggin,Email,setEmail
             >
                 Manage Users
             </button>
+
+            <br></br>
+
+            <FileUpload />
 
         </>
     );

@@ -16,8 +16,8 @@ export const AuthRegister = ({setIsLoggin}) =>{
         borderRadius: "30px",
         height: "60px",
         color: isHovered ? "white" : "black",
-        border: "1px solid red",
-        backgroundColor: isHovered ? "#333333" : "transparent",
+        border: "1px solid #a8d2f0",
+        backgroundColor: isHovered ? "black" : "transparent",
     };
 
 

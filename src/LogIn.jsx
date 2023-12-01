@@ -1,7 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Container, Row, Col, Card} from 'react-bootstrap';
 import {AuthRegister} from "./Validation/AuthRegister.jsx";
-import {DecryptPassword} from "./Utilities.jsx";
+import {DecryptPassword, EncryptPassword} from "./Utilities.jsx";
+
 
 
 
@@ -11,9 +12,14 @@ export default function LogIn(Email,Password,setEmail,setPass,handleLoggin,handl
     async function loginhandle() {
         const user = usersData.find((item) => item.email === Email);
 
+
         if (user) {
-            const decryptedPass = await DecryptPassword(Password);
-            if(decryptedPass === user.password){
+            const decryptedPass = await DecryptPassword(user.password);
+
+            console.log(decryptedPass)
+            console.log(Password)
+
+            if(decryptedPass === Password){
                 handleLoggin()
             }
             else{
@@ -30,18 +36,18 @@ export default function LogIn(Email,Password,setEmail,setPass,handleLoggin,handl
 
 
     return(
-        <section style={{ backgroundColor: '#d0bec3', backgroundSize: 'cover', height: '100vh', overflow: 'auto' }}>
+        <section style={{ backgroundColor: '#a8d2f0', backgroundSize: 'cover', height: '100vh', overflow: 'auto' }}>
         <Container className="py-5 h-100">
             <Row className="d-flex justify-content-center align-items-center h-100">
                 <Col xl={10}>
                     <Card style={{borderRadius: '1rem'}}>
                         <Row className="g-0">
-                            <Col md={6} lg={5} className="d-none d-md-block">
+                            <Col md={6} lg={5} className="d-none d-md-block" >
                                 <Card.Img
-                                    src='src/assets/2.jpg'
+                                    src='src/assets/6.jpeg'
                                     alt="login form"
                                     className="img-fluid"
-                                    style={{borderRadius: '1rem 0 0 1rem', height: '700'}}
+                                    style={{borderRadius: '1rem 0 0 1rem', height: '700', backgroundSize: 'cover', backgroundPosition: 'center'}}
                                 />
                             </Col>
                             <Col md={6} lg={7} className="d-flex align-items-center">
@@ -78,12 +84,6 @@ export default function LogIn(Email,Password,setEmail,setPass,handleLoggin,handl
                                         </div>
                                         <AuthRegister setIsLoggin={setIsLoggin}/>
 
-                                        <a href="#!" className="small text-muted">
-                                            Terms of use.
-                                        </a>
-                                        <a href="#!" className="small text-muted">
-                                            Privacy policy
-                                        </a>
                                     </form>
                                 </Card.Body>
                             </Col>
