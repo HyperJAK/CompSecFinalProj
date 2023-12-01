@@ -1,8 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Container, Row, Col, Card} from 'react-bootstrap';
 import axios from "axios";
-import {AuthRegister} from "./Validation/AuthRegister.js";
-import mainPic from './assets/6.jpeg';
+import {AuthRegister} from "./AuthRegister.js";
+import mainPic from '../assets/6.jpeg';
 
 
 export const AdminManage=({props})=>{

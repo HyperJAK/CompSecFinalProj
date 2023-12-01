@@ -1,9 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Button, Container, Row, Col, Card} from 'react-bootstrap';
+import {Button, Container, Row, Col, Card, Form, FloatingLabel} from 'react-bootstrap';
 import axios from "axios";
-import {AuthRegister} from "./Validation/AuthRegister.js";
-import {EncryptPassword} from "./Utilities.js";
-import mainPic from './assets/6.jpeg';
+import {AuthRegister} from "./AuthRegister.js";
+import {EncryptPassword, ValidEmail} from "../Utilities.js";
+import mainPic from '../assets/6.jpeg';
+import {EmailAndPass} from "./EmailAndPass.js";
 
 
 export const AdminAdd=({props}) =>{
@@ -93,28 +94,15 @@ export const AdminAdd=({props}) =>{
                                             </div>
                                             <h5 className="fw-normal mb-3 pb-3" style={{letterSpacing: '1px'}}>Add a User
                                             </h5>
-                                            <div className="form-outline mb-4">
-                                                <input value={Email} type="email" id="form2Example17"
-                                                       className="form-control form-control-lg"
-                                                       onChange={e=>{setEmail(e.target.value)}}/>
-                                                <label className="form-label" htmlFor="form2Example17">
-                                                    Email address
-                                                </label>
-                                            </div>
-                                            <div className="form-outline mb-4">
-                                                <input value={Password} type="password" id="form2Example27"
-                                                       className="form-control form-control-lg"
-                                                       onChange={e=>{setPass(e.target.value)}} />
-                                                <label className="form-label" htmlFor="form2Example27">
-                                                    Password
-                                                </label>
-                                                <input value={CPassword} type="password" id="form2Example29"
-                                                       className="form-control form-control-lg"
-                                                       onChange={e=>{setCPass(e.target.value)}} />
-                                                <label className="form-label" htmlFor="form2Example29">
-                                                    Confirm Password
-                                                </label>
-                                            </div> 
+
+                                            <EmailAndPass props={{Email,Password,setEmail,setPass}}/>
+                                            <br></br>
+
+                                            <FloatingLabel controlId="floatingPassword" label="Confirm Password" className="mb-3">
+                                                <Form.Control style={{ border: Password === CPassword ? '1px solid black' : '1px solid red' }} type="password" value={CPassword} onChange={e => setCPass(e.target.value)} />
+                                            </FloatingLabel>
+
+
                                             <div className="form-outline mb-4">
           <label className="form-label" htmlFor="form2Example27">
             Role

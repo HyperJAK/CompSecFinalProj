@@ -1,12 +1,12 @@
 import {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from "./HomePage/Home.js";
-import {LogIn} from "./LogIn.js";
-import {AdminAdd} from "./AdminAdd.js";
+import {LogIn} from "./Validation/LogIn.js";
+import {AdminAdd} from "./Validation/AdminAdd.js";
 import {useIdleTimer} from "react-idle-timer"
 import Alert from "./HomePage/AlertFunction.js";
 import axios from "axios";
-import {AdminManage} from "./AdminManage.js";
+import {AdminManage} from "./Validation/AdminManage.js";
 
 
 export default function App() {

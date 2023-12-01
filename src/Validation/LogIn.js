@@ -1,8 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Container, Row, Col, Card} from 'react-bootstrap';
-import {AuthRegister} from "./Validation/AuthRegister.js";
-import {DecryptPassword, EncryptPassword} from "./Utilities.js";
-import mainPic from './assets/6.jpeg';
+import {AuthRegister} from "./AuthRegister.js";
+import {DecryptPassword, EncryptPassword} from "../Utilities.js";
+import mainPic from '../assets/6.jpeg';
 
 
 
@@ -67,7 +67,10 @@ export const LogIn = ({props}) => {
                                         <div className="form-outline mb-4">
                                             <input value={Email} type="email" id="form2Example17"
                                                    className="form-control form-control-lg"
-                                                   onChange={e=>{setEmail(e.target.value)}}/>
+                                                   onChange={e=>{
+                                                       if(e.target.value.length < 100){
+                                                           setEmail(e.target.value)
+                                                       }}}/>
                                             <label className="form-label" htmlFor="form2Example17">
                                                 Email address
                                             </label>
@@ -75,7 +78,10 @@ export const LogIn = ({props}) => {
                                         <div className="form-outline mb-4">
                                             <input value={Password} type="password" id="form2Example27"
                                                    className="form-control form-control-lg"
-                                                   onChange={e=>{setPass(e.target.value)}} />
+                                                   onChange={e=>{
+                                                       if(e.target.value.length < 50){
+                                                           setPass(e.target.value)
+                                                       }}}/>
                                             <label className="form-label" htmlFor="form2Example27">
                                                 Password
                                             </label>
