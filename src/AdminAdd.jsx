@@ -2,27 +2,67 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Container, Row, Col, Card} from 'react-bootstrap';
 import axios from "axios";
 import {AuthRegister} from "./Validation/AuthRegister.jsx";
+import {EncryptPassword} from "./Utilities.jsx";
 
 
-export const AdminAdd=({props})=>{
+export const AdminAdd=({props}) =>{
 
    const {Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleAdminAdd,setIsLoggin}=props
-    
-    const handleR = () => {
-        if ((Email && Password && CPassword) && (Password===CPassword)) {
-            axios.post('http://localhost:5174/api/insertUser', {
-                mail: Email,
-                pass: Password,
-                role: role,
-            })
-                setPass('')
-                setCPass('')
-                setEmail('')
-                setRole('employee')
-                alert("success !")
 
-        } else {
-            alert('Please fill in all the required fields and make sure that your password is right');
+    const handleR = async () => {
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(Email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+        // Validate required fields
+        if (!Email || !Password || !CPassword) {
+            alert('Please fill in all the required fields.');
+            return;
+        }
+
+        // Validate password and confirmation match
+        if (Password !== CPassword) {
+            alert('Passwords do not match.');
+            return;
+        }
+
+        // Validate password strength (you can customize this rule)
+        if (Password.length < 8) {
+            alert('Password must be at least 8 characters long.');
+            return;
+        }
+        console.log(Password)
+
+        const encrypted = await EncryptPassword(Password)
+        setPass(encrypted);
+        console.log(encrypted)
+
+        // Validate role
+        if (role !== 'employee' && role !== 'admin') {
+            alert('Invalid role selected.');
+            return;
+        }
+
+        // If all validations pass, proceed with registration
+        const response = axios.post('http://localhost:5174/api/insertUser', {
+            mail: Email,
+            pass: encrypted,
+            role: role,
+        })
+            .catch(error => {
+                console.error('Error in registration:', error);
+            });
+
+        if (response) {
+            // Handle successful registration
+            setPass('');
+            setCPass('');
+            setEmail('');
+            setRole('employee');
+            alert('Registration successful!');
         }
     };
 

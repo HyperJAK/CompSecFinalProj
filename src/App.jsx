@@ -63,7 +63,7 @@ export default function App() {
 
 
     function handleLoggin() {
-setIsLoggin(!isLoggin);
+        setIsLoggin(!isLoggin);
         
     }
 
