@@ -4,7 +4,7 @@ import {AuthRegister} from "./Validation/AuthRegister.jsx";
 
 
 
-export default function LogIn(Email,Password,setEmail,setPass,handleLoggin,handleRegistring,usersData,setIsLoggin){
+export default function LogIn(Email,Password,setEmail,setPass,handleLoggin,handleAdminAdd,usersData,setIsLoggin){
 
 
     function loginhandle() {

@@ -2,10 +2,11 @@ import {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from "./HomePage/Home.jsx";
 import LogIn from "./LogIn.jsx";
-import {Registre} from "./Registre.jsx";
+import {AdminAdd} from "./AdminAdd.jsx";
 import {useIdleTimer} from "react-idle-timer"
 import Alert from "./HomePage/AlertFunction.jsx";
 import axios from "axios";
+import {AdminManage} from "./AdminManage.jsx";
 
 
 export default function App() {
@@ -14,14 +15,19 @@ export default function App() {
     const [Email, setEmail] = useState("");
     const [Password, setPass] = useState("");
     const [CPassword, setCPass] = useState("");
-    const [isRegistring, setIsRegistring] = useState(false);
+    const [isAdminAdding, setIsAdminAdding] = useState(false);
+    const [isAdminManaging, setIsAdminManaging] = useState(false);
     const [showSessionExpiredModal, setShowSessionExpiredModal] = useState(false);
     const [tableData, setTableData] = useState([]);
     const [usersData, setUsersData] = useState([]);
     const [role, setRole] = useState("employee"); // or 'employee' based on your authentication logic
     const [isSaving, setisSaving] = useState(false);
-    console.log('UserRole in App:', role);
-    console.log('UserEamil in App:', Email);
+
+
+    /*console.log('UserRole in App:', role);
+    console.log('UserEamil in App:', Email);*/
+
+
     useEffect(() => {
         // Fetch table data
         axios.get('http://localhost:5174/api/get').then((response) => {
@@ -34,7 +40,7 @@ export default function App() {
         
 
         setisSaving(false)
-    }, [isLoggin,isRegistring,isSaving] );
+    }, [isLoggin,isAdminAdding,isSaving] );
 
 
     useEffect(() => {
@@ -62,7 +68,7 @@ setIsLoggin(!isLoggin);
     }
 
     const handleOnIdle = () => {
-        if (!isRegistring && !isLoggin) {
+        if (!isAdminAdding && !isLoggin) {
             setShowSessionExpiredModal(true);
         }
     };
@@ -79,25 +85,31 @@ setIsLoggin(!isLoggin);
         return () => {
             setShowSessionExpiredModal(false)
         };
-    }, [isLoggin, isRegistring, reset]);
+    }, [isLoggin, isAdminAdding, reset]);
 
-    function handleRegistring() {
-        setIsRegistring(!isRegistring);
+    function handleAdminAdd() {
+        setIsAdminAdding(!isAdminAdding);
+    }
+
+    function handleAdminManage(){
+        setIsAdminManaging(!isAdminManaging);
     }
 
     const handleCloseSessionExpiredModal = () => {
         setIsLoggin(true);
-        setIsRegistring(false);
+        setIsAdminAdding(false);
     };
 
 
-    if (isLoggin && !isRegistring) {
-        return (LogIn(Email, Password, setEmail, setPass, handleLoggin, handleRegistring, usersData, setIsLoggin));
-    } else if (isRegistring) {
-return (<Registre props={{Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleRegistring,setIsLoggin}}/>)
+    if (isLoggin && !isAdminAdding) {
+        return (LogIn(Email, Password, setEmail, setPass, handleLoggin, handleAdminAdd, usersData, setIsLoggin));
+    } else if (isAdminAdding) {
+return (<AdminAdd props={{Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleAdminAdd,setIsLoggin}}/>)}
+    else if (isAdminManaging) {
+            return (<AdminManage props={{Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleAdminManage,setIsLoggin}}/>)
     } else {
         return (<>
-<Home tableData={tableData} setTableData={setTableData} handleLoggin={handleLoggin} Email={Email }setEmail={setEmail} setPass={setPass} setCPass={setCPass} role={role} setisSaving={setisSaving} handleRegistring={handleRegistring}/>
+<Home tableData={tableData} setTableData={setTableData} handleLoggin={handleLoggin} Email={Email }setEmail={setEmail} setPass={setPass} setCPass={setCPass} role={role} setisSaving={setisSaving} handleAdminAdd={handleAdminAdd} handleAdminManage={handleAdminManage}/>
                 <Alert
                     showSessionExpiredModal={showSessionExpiredModal}
                     handleCloseSessionExpiredModal={handleCloseSessionExpiredModal}

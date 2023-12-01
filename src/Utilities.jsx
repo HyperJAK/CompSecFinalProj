@@ -53,7 +53,6 @@ export function ValidPassword(pass){
     .{8,}: Ensures that the total length of the password is at least 8 characters.
     $: Asserts the end of the string.
     * */
-
 }
 
 

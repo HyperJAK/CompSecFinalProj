@@ -3,7 +3,7 @@ import {useState} from 'react';
 import axios from "axios";
 import {useAuth0} from "@auth0/auth0-react";
 
-export default function Home({tableData,setTableData,handleLoggin,Email,setEmail,setPass,setCPass,role,setisSaving,handleRegistring}) {
+export default function Home({tableData,setTableData,handleLoggin,Email,setEmail,setPass,setCPass,role,setisSaving,handleAdminAdd,handleAdminManage}) {
 
 
     console.log('UserRole in Home:', role);
@@ -241,10 +241,19 @@ export default function Home({tableData,setTableData,handleLoggin,Email,setEmail
             <button
                 type="button"
                 className="btn btn-primary mt-3"
-                onClick={handleRegistring}
+                onClick={handleAdminAdd}
                 style={{display: role==="admin"? "block":"none"}}
             >
-                Add User
+                Add Users
+            </button>
+
+            <button
+                type="button"
+                className="btn btn-primary mt-3"
+                onClick={handleAdminManage}
+                style={{display: role==="admin"? "block":"none"}}
+            >
+                Manage Users
             </button>
 
         </>

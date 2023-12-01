@@ -4,10 +4,10 @@ import axios from "axios";
 import {AuthRegister} from "./Validation/AuthRegister.jsx";
 
 
-export const Registre=({props})=>{
+export const AdminManage=({props})=>{
 
-   const {Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleRegistring,setIsLoggin}=props
-    
+    const {Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleAdminManage,setIsLoggin}=props
+
     const handleR = () => {
         if ((Email && Password && CPassword) && (Password===CPassword)) {
             axios.post('http://localhost:5174/api/insertUser', {
@@ -15,11 +15,11 @@ export const Registre=({props})=>{
                 pass: Password,
                 role: role,
             })
-                setPass('')
-                setCPass('')
-                setEmail('')
-                setRole('employee')
-                alert("success !")
+            setPass('')
+            setCPass('')
+            setEmail('')
+            setRole('employee')
+            alert("success !")
 
         } else {
             alert('Please fill in all the required fields and make sure that your password is right');
@@ -48,10 +48,9 @@ export const Registre=({props})=>{
                                             <div className="d-flex align-items-center mb-3 pb-1">
                                                 <i className="fas fa-cubes fa-2x me-3"
                                                    style={{color: '#ff6219'}}></i>
-                                                <span className="h1 fw-bold mb-0">Sign Up</span>
+                                                <span className="h1 fw-bold mb-0">Admin Manage User</span>
                                             </div>
-                                            <h5 className="fw-normal mb-3 pb-3" style={{letterSpacing: '1px'}}>
-                                                Sign into your account
+                                            <h5 className="fw-normal mb-3 pb-3" style={{letterSpacing: '1px'}}>Update a User
                                             </h5>
                                             <div className="form-outline mb-4">
                                                 <input value={Email} type="email" id="form2Example17"
@@ -66,46 +65,47 @@ export const Registre=({props})=>{
                                                        className="form-control form-control-lg"
                                                        onChange={e=>{setPass(e.target.value)}} />
                                                 <label className="form-label" htmlFor="form2Example27">
-                                                    Password
+                                                    New Password
                                                 </label>
                                                 <input value={CPassword} type="password" id="form2Example29"
                                                        className="form-control form-control-lg"
                                                        onChange={e=>{setCPass(e.target.value)}} />
                                                 <label className="form-label" htmlFor="form2Example29">
-                                                    Confirm Password
+                                                    Confirm New Password
                                                 </label>
-                                            </div> 
+                                            </div>
                                             <div className="form-outline mb-4">
-          <label className="form-label" htmlFor="form2Example27">
-            Role
-          </label>
-          <select
-            className="form-select form-select-lg"
-            id="form2Example27"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-          >
-            <option value="employee">Employee</option>
-            <option value="admin">Admin</option>
-          </select>
-        </div>
-                                                
-                                                 
+                                                <label className="form-label" htmlFor="form2Example27">
+                                                    Role
+                                                </label>
+                                                <select
+                                                    className="form-select form-select-lg"
+                                                    id="form2Example27"
+                                                    value={role}
+                                                    onChange={(e) => setRole(e.target.value)}
+                                                >
+                                                    <option value="employee">Employee</option>
+                                                    <option value="admin">Admin</option>
+                                                </select>
+                                            </div>
 
-                                                  
+
+
+
                                             <div className="pt-1 mb-4">
                                                 <Button variant="dark" size="lg" onClick={handleR}>
-                                                    Register
+                                                    Update User
+                                                </Button>
+                                            </div>
+
+                                            <div className="pt-1 mb-4">
+                                                <Button variant="dark" size="lg" onClick={handleAdminManage}  style={{color: 'white'}}>
+                                                    Go Back
                                                 </Button>
                                             </div>
 
                                             <AuthRegister setIsLoggin={setIsLoggin}/>
 
-                                            <p className="mb-5 pb-lg-2" style={{color: '#393f81'}}>
-                                                Have an Account? <a onClick={handleRegistring} style={{color: '#393f81'}}>
-                                                Sign In
-                                            </a>
-                                            </p>
                                             <a href="#!" className="small text-muted">
                                                 Terms of use.
                                             </a>
