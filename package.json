@@ -21,7 +21,9 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18.2.0",
-    "react-idle-timer": "^5.7.2"
+    "react-drag-drop-files": "^2.3.10",
+    "react-idle-timer": "^5.7.2",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.14",
