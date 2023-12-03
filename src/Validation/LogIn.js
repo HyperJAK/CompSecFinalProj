@@ -10,7 +10,7 @@ import mainPic from '../assets/6.jpeg';
 export const LogIn = ({props}) => {
 
 
-    const {Email, Password, setEmail, setPass, handleLoggin, handleAdminAdd, usersData, setIsLoggin} = props;
+    const {Email, Password, setEmail, setPass, handleLoggin, handleAdminAdd, usersData, setIsLoggin, setRole} = props;
     async function loginhandle() {
         const user = Array.isArray(usersData) ? usersData.find((item) => item.email === Email) ?? null : null;
 
@@ -19,10 +19,8 @@ export const LogIn = ({props}) => {
         if (user) {
             const decryptedPass = await DecryptPassword(user.password);
 
-            console.log(decryptedPass)
-            console.log(Password)
-
             if(decryptedPass === Password){
+                setRole(user.role)
                 handleLoggin()
             }
             else{
