@@ -5,11 +5,15 @@ import {AuthRegister} from "./AuthRegister.js";
 import {EncryptPassword, ValidEmail} from "../Utilities.js";
 import mainPic from '../assets/6.jpeg';
 import {EmailAndPass} from "./EmailAndPass.js";
+import {useState} from "react";
 
 
 export const AdminAdd=({props}) =>{
 
-   const {Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleAdminAdd,setIsLoggin}=props
+   const {Email,Password,CPassword,setEmail,setPass,setCPass,handleLoggin,handleAdminAdd,setIsLoggin}=props
+
+
+    const [chosenRole, setChosenRole] = useState('employee');
 
     const handleR = async () => {
         // Validate email format
@@ -40,10 +44,9 @@ export const AdminAdd=({props}) =>{
 
         const encrypted = await EncryptPassword(Password)
         setPass(encrypted);
-        console.log(encrypted)
 
         // Validate role
-        if (role !== 'employee' && role !== 'admin') {
+        if (chosenRole !== 'employee' && chosenRole !== 'admin') {
             alert('Invalid role selected.');
             return;
         }
@@ -52,7 +55,7 @@ export const AdminAdd=({props}) =>{
         const response = axios.post('http://localhost:5174/api/insertUser', {
             mail: Email,
             pass: encrypted,
-            role: role,
+            role: chosenRole,
         })
             .catch(error => {
                 console.error('Error in registration:', error);
@@ -63,7 +66,6 @@ export const AdminAdd=({props}) =>{
             setPass('');
             setCPass('');
             setEmail('');
-            setRole('employee');
             alert('Registration successful!');
         }
     };
@@ -110,8 +112,8 @@ export const AdminAdd=({props}) =>{
           <select
             className="form-select form-select-lg"
             id="form2Example27"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
+            value={chosenRole}
+            onChange={(e) => setChosenRole(e.target.value)}
           >
             <option value="employee">Employee</option>
             <option value="admin">Admin</option>

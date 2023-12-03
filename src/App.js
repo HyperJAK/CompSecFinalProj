@@ -7,6 +7,7 @@ import {useIdleTimer} from "react-idle-timer"
 import Alert from "./HomePage/AlertFunction.js";
 import axios from "axios";
 import {AdminManage} from "./Validation/AdminManage.js";
+import tab from "bootstrap/js/src/tab.js";
 
 
 export default function App() {
@@ -21,7 +22,7 @@ export default function App() {
   const [tableData, setTableData] = useState([]);
   const [usersData, setUsersData] = useState([]);
   const [role, setRole] = useState("employee"); // or 'employee' based on your authentication logic
-  const [isSaving, setisSaving] = useState(false);
+  const [isSaving, setisSaving] = useState(true);
 
 
   /*console.log('UserRole in App:', role);
@@ -29,18 +30,20 @@ export default function App() {
 
 
   useEffect(() => {
-    // Fetch table data
-    axios.get('http://localhost:5174/api/get').then((response) => {
-      setTableData(response.data);
-    });
 
-    axios.get('http://localhost:5174/api/getUsers').then((response) => {
-      setUsersData(response.data);
-    });
+      axios.get('http://localhost:5174/api/get').then((response) => {
+        setTableData(response.data);
+        console.log(response.data)
+      });
+
+      axios.get('http://localhost:5174/api/getUsers').then((response) => {
+        setUsersData(response.data);
+      });
 
 
-    setisSaving(false)
-  }, [isLoggin,isAdminAdding,isSaving] );
+
+
+  }, [isLoggin,isAdminAdding,isAdminManaging,isSaving]);
 
 
   useEffect(() => {
@@ -102,14 +105,14 @@ export default function App() {
 
 
   if (isLoggin && !isAdminAdding) {
-    return (<LogIn props={({Email, Password, setEmail, setPass, handleLoggin, handleAdminAdd, usersData, setIsLoggin})}/>);
+    return (<LogIn props={({Email, Password, setEmail, setPass, handleLoggin, handleAdminAdd, usersData, setIsLoggin, setRole})}/>);
   } else if (isAdminAdding) {
-    return (<AdminAdd props={{Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleAdminAdd,setIsLoggin}}/>)}
+    return (<AdminAdd props={{Email,Password,CPassword,setEmail,setPass,setCPass,handleLoggin,handleAdminAdd,setIsLoggin}}/>)}
   else if (isAdminManaging) {
-    return (<AdminManage props={{Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleAdminManage,setIsLoggin,usersData}}/>)
+    return (<AdminManage props={{Email,Password,CPassword,setEmail,setPass,setCPass,handleLoggin,handleAdminManage,setIsLoggin,usersData}}/>)
   } else {
     return (<>
-          <Home tableData={tableData} setTableData={setTableData} handleLoggin={handleLoggin} Email={Email }setEmail={setEmail} setPass={setPass} setCPass={setCPass} role={role} setisSaving={setisSaving} handleAdminAdd={handleAdminAdd} handleAdminManage={handleAdminManage}/>
+          <Home tableData={tableData} setTableData={setTableData} handleLoggin={handleLoggin} Email={Email }setEmail={setEmail} setPass={setPass} setCPass={setCPass} role={role} isSaving={isSaving} setisSaving={setisSaving} handleAdminAdd={handleAdminAdd} handleAdminManage={handleAdminManage}/>
           <Alert
               showSessionExpiredModal={showSessionExpiredModal}
               handleCloseSessionExpiredModal={handleCloseSessionExpiredModal}

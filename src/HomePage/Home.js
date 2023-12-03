@@ -1,17 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import axios from "axios";
 import {useAuth0} from "@auth0/auth0-react";
 import {FileUpload} from "../UploadFile.js";
 
-export default function Home({tableData,setTableData,handleLoggin,Email,setEmail,setPass,setCPass,role,setisSaving,handleAdminAdd,handleAdminManage}) {
-
-
-    console.log('UserRole in Home:', role);
-    console.log('UserEamil in Home:', Email);
+export default function Home({tableData,setTableData,handleLoggin,Email,setEmail,setPass,setCPass,role,isSaving,setisSaving,handleAdminAdd,handleAdminManage}) {
     
 
-    
     const [showInputFields, setShowInputFields] = useState(false);
     const { logout} = useAuth0();
 
@@ -19,7 +14,7 @@ export default function Home({tableData,setTableData,handleLoggin,Email,setEmail
         //To logout properly from Auth if used
         // eslint-disable-next-line react-hooks/rules-of-hooks
 
-        logout({logoutParams: {returnTo: window.location.origin}}).then(r => {setIsLoggin(false);})
+        logout({logoutParams: {returnTo: window.location.origin}}).then(r => {handleLoggin()})
 
         setCPass(''),
         setEmail(''),
@@ -64,26 +59,43 @@ export default function Home({tableData,setTableData,handleLoggin,Email,setEmail
         canDelete: false
     });
 
-    const handleSaveButtonClick = async () => {
+    const handleSaveButtonClick = async() => {
 
         if (formData.name && formData.email && formData.title) {
-                 axios.post('http://localhost:5174/api/insert', {
-                    name: formData.name,
-                    email: formData.email,
-                    title: formData.title,
-                    department: formData.department,
-                    status: formData.status,
-                    position: formData.position,
-                    picture: formData.picture,
-                    allowed: formData.canDelete
-                });
-                setisSaving(true)
+
+            const data = {
+                name: formData.name,
+                email: formData.email,
+                title: formData.title,
+                department: formData.department,
+                status: formData.status,
+                position: formData.position,
+                picture: formData.picture,
+                allowed: formData.canDelete
+            }
+            try {
+                 await axios.post('http://localhost:5174/api/insert', data);
+
+                 const res = await axios.get('http://localhost:5174/api/get');
+
+
+                 if(res !== undefined){
+                     console.log('Entered the dungeonb')
+                     setTableData(res.data);
+                     console.log(res)
+                 }
+
+                //setisSaving(!isSaving);
+            } catch (error) {
+                alert('Error saving data:', error);
+            }
 
         }
          else {
             alert('Please fill in the required fields (Name, Email, Title).');
         }
     };
+
 
 
     const handleDeleteButtonClick = (id) => {
@@ -111,6 +123,47 @@ export default function Home({tableData,setTableData,handleLoggin,Email,setEmail
     }
 
 
+    const TableData = () =>{
+        return(
+            Array.isArray(tableData) && tableData.map((data) => (
+                <tr key={data.id}>
+                    <td>
+                        <div className="d-flex align-items-center">
+                            <img
+                                src={data.picture}
+                                alt=""
+                                style={{ width: '45px', height: '45px' }}
+                                className="rounded-circle"
+                            />
+                            <div className="ms-3">
+                                <p className="fw-bold mb-1">{data.name}</p>
+                                <p className="text-muted mb-0">{data.email}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <p className="fw-normal mb-1">{data.title}</p>
+                        <p className="text-muted mb-0">{data.department}</p>
+                    </td>
+                    <td>
+                                <span className="badge badge-success rounded-pill d-inline">
+                                    {data.status}
+                                </span>
+                    </td>
+                    <td>{data.position}</td>
+                    <td>
+                        <button
+                            type="button"
+                            className="btn btn-link btn-sm btn-rounded"
+                            onClick={() => handleDeleteButtonClick(data.id)}
+                        >
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            ))
+        );
+    }
 
     return (
         <>
@@ -125,44 +178,7 @@ export default function Home({tableData,setTableData,handleLoggin,Email,setEmail
                 </tr>
                 </thead>
                 <tbody>
-                {/* eslint-disable-next-line react/prop-types */}
-                {Array.isArray(tableData) && tableData.map((data) => (
-                    <tr key={data.id}>
-                        <td>
-                            <div className="d-flex align-items-center">
-                                <img
-                                    src={data.picture}
-                                    alt=""
-                                    style={{ width: '45px', height: '45px' }}
-                                    className="rounded-circle"
-                                />
-                                <div className="ms-3">
-                                    <p className="fw-bold mb-1">{data.name}</p>
-                                    <p className="text-muted mb-0">{data.email}</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p className="fw-normal mb-1">{data.title}</p>
-                            <p className="text-muted mb-0">{data.department}</p>
-                        </td>
-                        <td>
-                                <span className="badge badge-success rounded-pill d-inline">
-                                    {data.status}
-                                </span>
-                        </td>
-                        <td>{data.position}</td>
-                        <td>
-                            <button
-                                type="button"
-                                className="btn btn-link btn-sm btn-rounded"
-                                onClick={() => handleDeleteButtonClick(data.id)}
-                            >
-                                Delete
-                            </button>
-                        </td>
-                    </tr>
-                ))}
+                    <TableData />
                 </tbody>
             </table>
 
@@ -190,7 +206,7 @@ export default function Home({tableData,setTableData,handleLoggin,Email,setEmail
                         className="form-control mb-2"
                         placeholder="Email"
                         name="email"
-                        value={formData.Email}
+                        value={formData.email}
                         onChange={handleInputChange}
                     />
                     <input
@@ -198,7 +214,7 @@ export default function Home({tableData,setTableData,handleLoggin,Email,setEmail
                         className="form-control mb-2"
                         placeholder="Title"
                         name="title"
-                        value={formData.Title}
+                        value={formData.title}
                         onChange={handleInputChange}
                     />
                     <input
@@ -206,7 +222,7 @@ export default function Home({tableData,setTableData,handleLoggin,Email,setEmail
                         className="form-control mb-2"
                         placeholder="Department"
                         name="department"
-                        value={formData.Department}
+                        value={formData.department}
                         onChange={handleInputChange}
                     />
                     <input
@@ -214,7 +230,7 @@ export default function Home({tableData,setTableData,handleLoggin,Email,setEmail
                         className="form-control mb-2"
                         placeholder="Status"
                         name="status"
-                        value={formData.Status}
+                        value={formData.status}
                         onChange={handleInputChange}
                     />
                     <input
@@ -222,7 +238,7 @@ export default function Home({tableData,setTableData,handleLoggin,Email,setEmail
                         className="form-control mb-2"
                         placeholder="Position"
                         name="position"
-                        value={formData.Position}
+                        value={formData.position}
                         onChange={handleInputChange}
                     />
                     <button
