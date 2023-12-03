@@ -3,11 +3,14 @@ import {Button, Container, Row, Col, Card} from 'react-bootstrap';
 import axios from "axios";
 import {AuthRegister} from "./AuthRegister.js";
 import mainPic from '../assets/6.jpeg';
+import {useState} from "react";
 
 
 export const AdminManage=({props})=>{
 
-    const {Email,Password,role,CPassword,setEmail,setPass,setCPass,setRole,handleLoggin,handleAdminManage,setIsLoggin,usersData}=props
+    const {Email,Password,CPassword,setEmail,setPass,setCPass,handleLoggin,handleAdminManage,setIsLoggin,usersData}=props
+
+    const [chosenRole, setChosenRole] = useState('employee');
 
     const handleR = () => {
 
@@ -16,7 +19,7 @@ export const AdminManage=({props})=>{
         if (user) {
             const response = axios.post('http://localhost:5174/api/updateUser', {
                 mail: Email,
-                role: role,
+                role: chosenRole,
             })
 
             if(response){
@@ -71,8 +74,8 @@ export const AdminManage=({props})=>{
                                                 <select
                                                     className="form-select form-select-lg"
                                                     id="form2Example27"
-                                                    value={role}
-                                                    onChange={(e) => setRole(e.target.value)}
+                                                    value={chosenRole}
+                                                    onChange={(e) => setChosenRole(e.target.value)}
                                                 >
                                                     <option value="employee">Employee</option>
                                                     <option value="admin">Admin</option>
