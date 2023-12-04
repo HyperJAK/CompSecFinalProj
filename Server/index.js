@@ -39,39 +39,6 @@ app.get("/api/getUsers", (req, res) => {
 
 });
 
-app.post('/api/updateUserPic', (req, res) => {
-    try {
-        const { user } = req.body;
-        console.log('Updating user with email: ')
-        console.log(user.email)
-
-        /*if (!req.file) {
-            return res.status(400).json({ error: 'No file provided.' });
-        }*/
-
-        // Your SQL query to update the user profile picture
-        const sql = 'UPDATE mytable SET picture = ? WHERE id = ?';
-
-        db.query(sql, [user.image, user.email], (error, results) => {
-            if (error) {
-                console.error('Error updating user profile picture:', error);
-                return res.status(500).json({ error: 'Internal server error.' });
-            }
-
-            if (results.affectedRows === 0) {
-                return res.status(404).json({ error: 'User not found.' });
-            }
-
-            res.status(200).json({ message: 'User profile picture updated successfully.' });
-            console.log(results.affectedRows)
-        });
-
-    } catch (err) {
-        console.error('Error:', err);
-        res.status(500).json({ error: 'Internal server error.' });
-    }
-});
-
 app.get("/api/getRole", (req, res) => {
     const { userEmail } = req.query; // Assuming you pass the user's email as a query parameter
     const sqlSelectRole = "SELECT role FROM userstable WHERE email = ?";
