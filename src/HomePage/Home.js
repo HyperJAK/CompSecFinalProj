@@ -9,6 +9,7 @@ export default function Home({tableData,setTableData,handleLoggin,Email,setEmail
 
     const [showInputFields, setShowInputFields] = useState(false);
     const { logout} = useAuth0();
+    const [testPic, setTestPic] = useState({image: null});
 
     const handlelogout = () => {
         //To logout properly from Auth if used
@@ -283,7 +284,9 @@ export default function Home({tableData,setTableData,handleLoggin,Email,setEmail
 
             <br></br>
 
-            <FileUpload />
+            {/*<img src={testPic.image} alt={'Testing Picture here'} />*/}
+
+            <FileUpload setTestPic={setTestPic}/>
 
         </>
     );
