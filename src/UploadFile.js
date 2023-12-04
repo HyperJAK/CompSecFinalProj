@@ -4,16 +4,40 @@ import { FileUploader } from 'react-drag-drop-files';
 
 const fileTypes = ['JPEG', 'PNG', 'GIF', 'JPG'];
 
-export function FileUpload() {
+
+function LoadImage(img, setTestPic) {
+    const file = img;
+
+
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+
+            setTestPic((prevData) =>({
+                ...prevData,
+                image: reader.result
+            }))
+        };
+
+        reader.readAsDataURL(file);
+    }
+}
+
+
+export const FileUpload = ({setTestPic}) =>{
     const [file, setFile] = useState(null);
-    const handleChange = async (newFile) => {
+
+    const [user, setUser] = useState({id:null, image:null});
+
+    const handleChange = (newFile) => {
         setFile(newFile);
 
         try{
-            const formData = formData.append('file', file)
-        }catch(error){
-            alert(error)
-        }
+            const formData = formData.append('file', newFile)
+
+            LoadImage({img: newFile, setTestPic: setTestPic})
+
 
 
         var request = require('request');
@@ -30,6 +54,10 @@ export function FileUpload() {
             if (error) throw new Error(error);
             console.log(response.body);
         });
+
+        }catch(error){
+            console.log(error)
+        }
 
 
 
