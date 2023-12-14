@@ -27,6 +27,8 @@ npm install
 
 </details>
 
+--Then change .env files in base project dir and in Server dir accordingly
+
 ### To Start
 <details>
 <summary>mySQL Script for Db:</summary>
