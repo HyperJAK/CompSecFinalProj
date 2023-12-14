@@ -1,12 +1,91 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).  
+
+### To Install Dependencies  
+<details>
+<summary>Project deps:</summary>
+<br>  
+  
+```
+npm install 
+```
+
+</details>
+<details>
+<summary>Server deps:</summary>
+<br>  
+  
+```
+cd server 
+``` 
+
+  
+```
+npm install 
+``` 
+
+</details>
+
+### To Start
+<details>
+<summary>mySQL Script for Db:</summary>
+<br>  
+
+```sql
+create database projectdatabase;
+use projectdatabase;
+
+CREATE TABLE `mytable` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `title` varchar(45) DEFAULT NULL,
+  `department` varchar(45) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  `position` varchar(45) DEFAULT NULL,
+  `picture` text,
+  `allowed` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `userstable` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(45) NOT NULL,
+  `password` text,
+  `role` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+```
+
+</details>
+
+<details>
+<summary>Commands to run web and server:</summary>
+<br>
+-Web: for now its 
+
+```
+npm start 
+```
+
+<br>
+-Server: 
+
+```
+cd Server 
+```
+```
+npm start || npm devStart
+```
+</details>
 
 ## Available Scripts
 
 In the project directory, you can run:
 
 ### `npm start`
+
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
