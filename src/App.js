@@ -73,6 +73,8 @@ export default function App() {
   const handleOnIdle = () => {
     if (!isAdminAdding && !isLoggin) {
       setShowSessionExpiredModal(true);
+      setEmail("");
+      setPass("");
     }
   };
 
